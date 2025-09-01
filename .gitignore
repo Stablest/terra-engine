@@ -1,0 +1,16 @@
+# Build folders
+/build
+
+# IDE related
+*.idea/
+*.iml
+*.user
+
+# Windows
+*.exe
+*.dll
+*.pdb
+
+# Temporary
+*.swp
+*.DS_Store
