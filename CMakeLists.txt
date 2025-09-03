@@ -10,7 +10,13 @@ add_subdirectory(third-parties/glfw-3.4)
 add_library(glad STATIC third-parties/glad/src/glad.c)
 target_include_directories(glad PUBLIC third-parties/glad/include)
 
-add_executable(terra_engine src/main.cpp)
 
-target_link_libraries(terra_engine PRIVATE glfw)
+add_executable(terra_engine main.cpp
+        src/core/engine/engine.cpp
+        src/core/engine/engine.hpp
+        src/core/window/window.cpp
+        src/core/window/window.hpp
+)
+
+target_link_libraries(terra_engine PRIVATE glfw glad)
 target_include_directories(terra_engine PRIVATE include)
