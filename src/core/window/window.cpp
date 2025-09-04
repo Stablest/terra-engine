@@ -1,8 +1,10 @@
 #include "window.hpp"
 
-#include <stdexcept>
+#include <iostream>
+#include <ostream>
 #include <string>
 #include "drivers/opengl/terra-opengl.hpp"
+#include "misc/error/error.h"
 
 static void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -15,12 +17,11 @@ Window::Window(const int width, const int height, const char *title) : width(wid
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     GLFWwindow *window = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
     if (!window) {
-        glfwTerminate();
-        throw std::runtime_error("Failed to create application window");
+        handleFatalError("Failed to create application window");
     }
     glfwMakeContextCurrent(window);
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
-        throw std::runtime_error("Failed to initialize GLAD");
+        handleFatalError("Failed to initialize GLAD");
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     handle = window;
