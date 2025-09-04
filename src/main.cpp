@@ -1,5 +1,5 @@
 #include <iostream>
-#include "src/core/engine/engine.hpp"
+#include "core/engine/engine.hpp"
 
 // TODO -> Get correct parameters of engine initialization
 int main() {

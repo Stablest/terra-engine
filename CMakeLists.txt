@@ -11,7 +11,7 @@ add_library(glad STATIC third-parties/glad/src/glad.c)
 target_include_directories(glad PUBLIC third-parties/glad/include)
 
 
-add_executable(terra_engine main.cpp
+add_executable(terra_engine src/main.cpp
         src/core/engine/engine.cpp
         src/core/engine/engine.hpp
         src/core/window/window.cpp
