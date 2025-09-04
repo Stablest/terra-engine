@@ -12,6 +12,4 @@ class Engine {
 
 public:
     Engine(int width, int height, const char *title);
-
-    ~Engine();
 };

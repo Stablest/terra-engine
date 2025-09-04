@@ -14,5 +14,3 @@ Engine::Engine(const int width, const int height, const char *title) : window(wi
     start_loop();
 }
 
-Engine::~Engine() = default;
-
