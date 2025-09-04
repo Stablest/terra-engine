@@ -4,22 +4,16 @@ project(terra_engine)
 set(CMAKE_CXX_STANDARD 20)
 
 # Subdirectories
-add_subdirectory(third-parties/glfw-3.4)
-
-# Libraries
-add_library(glad STATIC third-parties/glad/src/glad.c)
-target_include_directories(glad PUBLIC third-parties/glad/include)
-
+add_subdirectory(src/drivers/opengl)
 
 add_executable(terra_engine src/main.cpp
         src/core/engine/engine.cpp
         src/core/engine/engine.hpp
         src/core/window/window.cpp
         src/core/window/window.hpp
-        src/drivers/opengl/terra-opengl.hpp
         src/misc/error/error.cpp
         src/misc/error/error.h
 )
 
-target_link_libraries(terra_engine PRIVATE glfw glad)
+target_link_libraries(terra_engine PRIVATE terra_opengl)
 target_include_directories(terra_engine PUBLIC include PRIVATE src)
