@@ -1,9 +1,8 @@
 #include "window.hpp"
 
-#include <iostream>
 #include <ostream>
 #include <string>
-#include "drivers/opengl/terra-opengl.hpp"
+#include "terra-opengl.hpp"
 #include "misc/error/error.h"
 
 static void framebuffer_size_callback(GLFWwindow *window, int width, int height) {

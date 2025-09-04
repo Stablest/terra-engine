@@ -1,9 +1,10 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
+
 #include "error.h"
 #include <iostream>
-#include "drivers/opengl/terra-opengl.hpp"
+#include "terra-opengl.hpp"
 
 namespace {
     void fatal_exit() {

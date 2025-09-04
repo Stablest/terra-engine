@@ -4,7 +4,7 @@ project(terra_engine)
 set(CMAKE_CXX_STANDARD 20)
 
 # Subdirectories
-add_subdirectory(src/drivers/opengl)
+add_subdirectory(drivers/opengl)
 
 add_executable(terra_engine src/main.cpp
         src/core/engine/engine.cpp
@@ -16,4 +16,4 @@ add_executable(terra_engine src/main.cpp
 )
 
 target_link_libraries(terra_engine PRIVATE terra_opengl)
-target_include_directories(terra_engine PUBLIC include PRIVATE src)
+target_include_directories(terra_engine PUBLIC include PRIVATE src drivers/opengl)

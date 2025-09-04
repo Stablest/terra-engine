@@ -5,6 +5,4 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/third-parties/glad/in
 
 add_library(terra_opengl terra-opengl.hpp terra_opengl.cpp)
 
-target_link_libraries(terra_opengl
-        PUBLIC glfw glad
-)
+target_link_libraries(terra_opengl PUBLIC glfw glad)

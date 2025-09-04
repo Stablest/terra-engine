@@ -1,5 +1,5 @@
 #include "engine.hpp"
-#include "drivers/opengl/terra-opengl.hpp"
+#include "terra-opengl.hpp"
 
 void Engine::startLoop() const {
     while (!window.shouldClose()) {
