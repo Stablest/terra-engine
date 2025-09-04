@@ -16,7 +16,8 @@ add_executable(terra_engine main.cpp
         src/core/engine/engine.hpp
         src/core/window/window.cpp
         src/core/window/window.hpp
+        src/drivers/opengl/terra-opengl.hpp
 )
 
 target_link_libraries(terra_engine PRIVATE glfw glad)
-target_include_directories(terra_engine PRIVATE include)
+target_include_directories(terra_engine PUBLIC include PRIVATE src)

@@ -1,6 +1,4 @@
 #include <iostream>
-#include <GLFW/glfw3.h>
-
 #include "src/core/engine/engine.hpp"
 
 // TODO -> Get correct parameters of engine initialization

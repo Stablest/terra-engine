@@ -1,6 +1,5 @@
 #include "engine.hpp"
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+#include "drivers/opengl/terra-opengl.hpp"
 
 void Engine::start_loop() const {
     while (!window.shouldClose()) {
