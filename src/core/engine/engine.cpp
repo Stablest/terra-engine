@@ -1,7 +1,7 @@
 #include "engine.hpp"
 #include "drivers/opengl/terra-opengl.hpp"
 
-void Engine::start_loop() const {
+void Engine::startLoop() const {
     while (!window.shouldClose()) {
         glClear(GL_COLOR_BUFFER_BIT);
         glfwPollEvents();
@@ -10,6 +10,6 @@ void Engine::start_loop() const {
 }
 
 Engine::Engine(const int width, const int height, const char *title) : window(width, height, title) {
-    start_loop();
+    startLoop();
 }
 

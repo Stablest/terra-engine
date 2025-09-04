@@ -8,7 +8,7 @@
 class Engine {
     Window window;
 
-    void start_loop() const;
+    void startLoop() const;
 
 public:
     Engine(int width, int height, const char *title);
