@@ -35,8 +35,12 @@ namespace {
 }
 
 void handleFatalError(const char *message) {
-    std::cerr << "FATAL ERROR: " << message << std::endl;
+    log(message);
     glfwTerminate();
     show_popup(message);
     fatal_exit();
+}
+
+void handleWarningError(const char *message) {
+    log(message);
 }
