@@ -5,9 +5,9 @@
 struct GLFWwindow;
 
 class Window {
-    GLFWwindow *handle;
-    int width, height;
-    std::string name;
+    GLFWwindow *handle_;
+    int width_, height_;
+    std::string name_;
 
 public:
     explicit Window(int width, int height, const char *title);

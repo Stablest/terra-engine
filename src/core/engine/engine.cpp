@@ -3,14 +3,14 @@
 #include "core/shader/resources/default_shaders.h"
 
 void Engine::startLoop() const {
-    while (!window.shouldClose()) {
+    while (!window_.shouldClose()) {
         glClear(GL_COLOR_BUFFER_BIT);
         glfwPollEvents();
-        window.swapBuffers();
+        window_.swapBuffers();
     }
 }
 
-Engine::Engine(const int width, const int height, const char *title) : window(width, height, title),
+Engine::Engine(const int width, const int height, const char *title) : window_(width, height, title),
                                                                        shaderProgram_(
                                                                            ShaderProgram::createDefaultProgram(
                                                                                ShaderProgram::createDefaultShader(

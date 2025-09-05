@@ -9,12 +9,12 @@ static void framebuffer_size_callback(GLFWwindow *window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-Window::Window(const int width, const int height, const char *title) : width(width), height(height), name(title) {
+Window::Window(const int width, const int height, const char *title) : width_(width), height_(height), name_(title) {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    GLFWwindow *window = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(width, height, name_.c_str(), nullptr, nullptr);
     if (!window) {
         handleFatalError("Failed to create application window");
     }
@@ -23,35 +23,35 @@ Window::Window(const int width, const int height, const char *title) : width(wid
         handleFatalError("Failed to initialize GLAD");
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    handle = window;
+    handle_ = window;
     glViewport(0, 0, width, height);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 }
 
 Window::~Window() {
-    if (handle) {
-        glfwDestroyWindow(handle);
-        handle = nullptr;
+    if (handle_) {
+        glfwDestroyWindow(handle_);
+        handle_ = nullptr;
     }
     glfwTerminate();
 }
 
 std::string Window::getName() {
-    return this->name;
+    return this->name_;
 }
 
 int Window::getWidth() const {
-    return this->width;
+    return this->width_;
 }
 
 int Window::getHeight() const {
-    return this->height;
+    return this->height_;
 }
 
 bool Window::shouldClose() const {
-    return glfwWindowShouldClose(handle);
+    return glfwWindowShouldClose(handle_);
 }
 
 void Window::swapBuffers() const {
-    glfwSwapBuffers(handle);
+    glfwSwapBuffers(handle_);
 }

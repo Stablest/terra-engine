@@ -4,7 +4,7 @@
 #include "core/shader/shader_program.hpp"
 
 class Engine {
-    Window window;
+    Window window_;
     ShaderProgram shaderProgram_;
 
     void startLoop() const;
