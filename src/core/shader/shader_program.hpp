@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "terra-opengl.hpp"
+#include "terra_opengl.hpp"
 
 class ShaderProgram {
     GLuint id_ = 0;

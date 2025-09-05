@@ -2,7 +2,7 @@
 
 #include <ostream>
 #include <string>
-#include "terra-opengl.hpp"
+#include "terra_opengl.hpp"
 #include "misc/error/error.h"
 
 static void framebuffer_size_callback(GLFWwindow *window, int width, int height) {

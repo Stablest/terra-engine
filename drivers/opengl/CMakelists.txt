@@ -3,6 +3,6 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/third-parties/glfw-3.4 build)
 add_library(glad STATIC ${CMAKE_SOURCE_DIR}/third-parties/glad/src/glad.c)
 target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/third-parties/glad/include)
 
-add_library(terra_opengl terra-opengl.hpp terra_opengl.cpp)
+add_library(terra_opengl terra_opengl.hpp terra_opengl.cpp)
 
 target_link_libraries(terra_opengl PUBLIC glfw glad)

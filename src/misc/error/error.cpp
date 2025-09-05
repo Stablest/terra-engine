@@ -4,7 +4,7 @@
 
 #include "error.h"
 #include <iostream>
-#include "terra-opengl.hpp"
+#include "terra_opengl.hpp"
 
 namespace {
     void fatal_exit() {

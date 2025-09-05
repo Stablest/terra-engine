@@ -1,5 +1,5 @@
 #include "engine.hpp"
-#include "terra-opengl.hpp"
+#include "terra_opengl.hpp"
 #include "core/shader/resources/default_shaders.h"
 
 void Engine::startLoop() const {
