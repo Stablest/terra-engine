@@ -1,9 +1,6 @@
-#ifndef TERRA_ENGINE_ENGINE_HPP
-#define TERRA_ENGINE_ENGINE_HPP
+#pragma once
+
 #include "../window/window.hpp"
-
-#endif //TERRA_ENGINE_ENGINE_HPP
-
 
 class Engine {
     Window window;

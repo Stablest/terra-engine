@@ -1,8 +1,6 @@
-#ifndef TERRA_ENGINE_WINDOW_HPP
-#define TERRA_ENGINE_WINDOW_HPP
-#include <string>
-#endif //TERRA_ENGINE_WINDOW_HPP
+#pragma once
 
+#include <string>
 
 struct GLFWwindow;
 
