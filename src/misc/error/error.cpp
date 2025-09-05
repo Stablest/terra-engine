@@ -2,7 +2,7 @@
 #include <windows.h>
 #endif
 
-#include "error.h"
+#include "error.hpp"
 #include <iostream>
 #include "terra_opengl.hpp"
 

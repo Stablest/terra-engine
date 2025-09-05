@@ -1,5 +1,5 @@
 #include "shader_program.hpp"
-#include "misc/error/error.h"
+#include "misc/error/error.hpp"
 #include <string>
 
 ShaderProgram::ShaderProgram(const GLuint id, const unsigned int vertexShader, const unsigned int fragmentShader,

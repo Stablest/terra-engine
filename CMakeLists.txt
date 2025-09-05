@@ -15,7 +15,7 @@ add_executable(terra_engine src/main.cpp
         src/core/shader/shader_program.cpp
         src/core/shader/shader_program.hpp
         src/misc/error/error.cpp
-        src/misc/error/error.h
+        src/misc/error/error.hpp
         src/core/shader/resources/default_shaders.h
 )
 
