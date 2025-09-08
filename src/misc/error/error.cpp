@@ -20,27 +20,30 @@ namespace {
 #endif
     }
 
-    void log(const char *message) {
+    void log(const std::initializer_list<const char *> messages) {
 #ifndef NDEBUG
-        std::cerr << message << std::endl;
+        for (const auto message: messages) {
+            std::cerr << message;
+        }
+        std::cerr << std::endl;
 #endif
     }
 
     // TODO Create popup to Linux
-    void show_popup(const char *message) {
+    void show_popup(const char *title, const char *message) {
 #ifdef _WIN32
-        MessageBoxA(nullptr, message, "Fatal Error", MB_OK | MB_ICONERROR);
+        MessageBoxA(nullptr, title, "Fatal Error", MB_OK | MB_ICONERROR);
 #endif
     }
 }
 
-void handleFatalError(const char *message) {
-    log(message);
+void handleFatalError(const char *title, const char *message) {
+    log({title, message});
     glfwTerminate();
-    show_popup(message);
+    show_popup(title, message);
     fatal_exit();
 }
 
-void handleWarningError(const char *message) {
-    log(message);
+void handleWarningError(const char *title, const char *message) {
+    log({title, message});
 }

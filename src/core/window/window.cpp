@@ -1,5 +1,6 @@
 #include "window.hpp"
 
+#include <iostream>
 #include <ostream>
 #include <string>
 #include "terra_opengl.hpp"

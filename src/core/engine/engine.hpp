@@ -1,14 +1,19 @@
 #pragma once
+#include "core/renderer/renderer.hpp"
+#include "core/window/window.hpp"
 
-#include "../window/window.hpp"
-#include "core/shader/shader_program.hpp"
+class IGame;
 
 class Engine {
     Window window_;
-    ShaderProgram shaderProgram_;
+    Renderer renderer_;
+    IGame* game_;
+    void startLoop();
 
-    void startLoop() const;
+    void queueSprites();
 
 public:
-    Engine(int width, int height, const char *title);
+    Engine(int width, int height, const char *title, IGame* game);
+
+    static void registerDefaultComponents();
 };

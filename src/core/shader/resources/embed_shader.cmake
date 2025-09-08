@@ -1,0 +1,4 @@
+file(READ "${INPUT_FILE}" GLSL_CONTENTS)
+file(WRITE "${OUTPUT_FILE}" "const char* ${SHADER_NAME}_shader = R\"SHADER(
+${GLSL_CONTENTS}
+)SHADER\";\n")

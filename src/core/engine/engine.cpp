@@ -1,25 +1,49 @@
 #include "engine.hpp"
+#include <iostream>
+#include "game.hpp"
 #include "terra_opengl.hpp"
-#include "core/shader/resources/default_shaders.h"
+#include "core/ecs/component/component_manager.hpp"
+#include "glm/ext/matrix_transform.hpp"
 
-void Engine::startLoop() const {
+void queueSprites() {
+}
+
+void Engine::startLoop() {
     while (!window_.shouldClose()) {
-        glClear(GL_COLOR_BUFFER_BIT);
         glfwPollEvents();
+        game_->update();
+        queueSprites();
+        renderer_.render();
         window_.swapBuffers();
     }
 }
 
-Engine::Engine(const int width, const int height, const char *title) : window_(width, height, title),
-                                                                       shaderProgram_(
-                                                                           ShaderProgram::createDefaultProgram(
-                                                                               ShaderProgram::createDefaultShader(
-                                                                                   GL_VERTEX_SHADER,
-                                                                                   default_vertex_shader
-                                                                               ),
-                                                                               ShaderProgram::createDefaultShader(
-                                                                                   GL_FRAGMENT_SHADER,
-                                                                                   default_frag_shader))
-                                                                       ) {
+void Engine::queueSprites() {
+    ComponentSignature spriteSignature;
+    spriteSignature.set(getComponentType<Transform>());
+    spriteSignature.set(getComponentType<Sprite>());
+    const auto renderedEntities = EntityManager::getInstance().getEntitiesWithSignature(spriteSignature);
+    for (const Entity entity: renderedEntities) {
+        auto &[position, rotation, scale] = ComponentManager::getInstance().getComponent<Transform>(entity);
+        auto &sprite = ComponentManager::getInstance().getComponent<Sprite>(entity);
+        auto model = glm::mat4(1.0f);
+        model = glm::translate(model, position);
+        model = glm::rotate(model, rotation, glm::vec3(0, 0, 1));
+        model = glm::scale(model, scale * 100.0f);
+        renderer_.queueSprite({sprite.texture->getID(), 0, model, 0});
+    }
+}
+
+Engine::Engine(const int width, const int height, const char *title, IGame *game) : window_(width, height, title),
+    game_(game) {
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    registerDefaultComponents();
+    game_->create();
     startLoop();
+}
+
+void Engine::registerDefaultComponents() {
+    ComponentManager::getInstance().registerComponent<Transform>();
+    ComponentManager::getInstance().registerComponent<Sprite>();
 }

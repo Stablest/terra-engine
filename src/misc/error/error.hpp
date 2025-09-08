@@ -1,5 +1,5 @@
 #pragma once
 
-void handleFatalError(const char* message);
+void handleFatalError(const char* title, const char* message = nullptr);
 
-void handleWarningError(const char* message);
+void handleWarningError(const char* title, const char* message = nullptr);

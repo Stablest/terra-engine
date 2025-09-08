@@ -1,27 +1,32 @@
 #include "shader_program.hpp"
+#include <iostream>
 #include "misc/error/error.hpp"
 #include <string>
+#include <vector>
 
-ShaderProgram::ShaderProgram(const GLuint id, const unsigned int vertexShader, const unsigned int fragmentShader,
-                             const unsigned int geometryShader)
-    : id_(id), vertexShader_(vertexShader), fragmentShader_(fragmentShader), geometryShader_(geometryShader) {
-}
-
-ShaderProgram::~ShaderProgram() {
-    glDeleteShader(vertexShader_);
-    glDeleteShader(fragmentShader_);
-    if (geometryShader_ != 0) {
-        glDeleteShader(geometryShader_);
-    }
-    glDeleteProgram(id_);
+ShaderProgram::ShaderProgram(const GLuint id)
+    : id_(id) {
 }
 
 void ShaderProgram::use() const {
     glUseProgram(id_);
 }
 
-std::optional<ShaderProgram> ShaderProgram::createProgram(const unsigned int vertexShader, const unsigned int fragmentShader,
-                                           const unsigned int geometryShader, const bool isFatal) {
+void ShaderProgram::setMatrix4(const std::string &name, const float *value) const {
+    glUniformMatrix4fv(glGetUniformLocation(id_, name.c_str()), 1, GL_FALSE, value);
+}
+
+void ShaderProgram::setInt(const std::string &name, const int value) const {
+    glUniform1i(glGetUniformLocation(id_, name.c_str()), value);
+}
+
+GLuint ShaderProgram::getId() const {
+    return id_;
+}
+
+std::optional<ShaderProgram> ShaderProgram::createProgram(const unsigned int vertexShader,
+                                                          const unsigned int fragmentShader,
+                                                          const unsigned int geometryShader, const bool isFatal) {
     const GLuint id = glCreateProgram();
     if (id == 0) {
         if (isFatal) {
@@ -39,8 +44,13 @@ std::optional<ShaderProgram> ShaderProgram::createProgram(const unsigned int ver
     glLinkProgram(id);
     GLint linkSuccess = 0;
     glGetProgramiv(id, GL_LINK_STATUS, &linkSuccess);
-    if (linkSuccess == GL_FALSE) {
+    if (!linkSuccess) {
         glDeleteProgram(id);
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        if (geometryShader != 0) {
+            glDeleteShader(geometryShader);
+        }
         if (isFatal) {
             handleFatalError("Couldn't link shader program");
         } else {
@@ -48,43 +58,56 @@ std::optional<ShaderProgram> ShaderProgram::createProgram(const unsigned int ver
             return std::nullopt;
         }
     }
-    return ShaderProgram(id, vertexShader, fragmentShader, geometryShader);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+    if (geometryShader != 0) {
+        glDeleteShader(geometryShader);
+    }
+    return ShaderProgram(id);
 }
 
-std::optional<ShaderProgram> ShaderProgram::createCustomProgram(const unsigned int vertexShader, const unsigned int fragmentShader,
-                                                const unsigned int geometryShader) {
+std::optional<ShaderProgram> ShaderProgram::createCustomProgram(const unsigned int vertexShader,
+                                                                const unsigned int fragmentShader,
+                                                                const unsigned int geometryShader) {
     return createProgram(vertexShader, fragmentShader, geometryShader, false);
 }
 
 ShaderProgram ShaderProgram::createDefaultProgram(const unsigned int vertexShader, const unsigned int fragmentShader,
-                                                 const unsigned int geometryShader) {
+                                                  const unsigned int geometryShader) {
     return createProgram(vertexShader, fragmentShader, geometryShader, true).value();
 }
 
 
-GLuint ShaderProgram::createShader(const GLenum type, const char *file, const bool isFatal) {
+GLuint ShaderProgram::createShader(const GLenum type, const char *content, const bool isFatal) {
     const GLuint id = glCreateShader(type);
-    glShaderSource(id, 1, reinterpret_cast<const GLchar * const *>(&file), nullptr);
+    glShaderSource(id, 1, &content, nullptr);
     glCompileShader(id);
     GLint status;
     glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-    if (status == GL_FALSE) {
-        glGetShaderInfoLog(id, sizeof(GLchar), nullptr, nullptr);
+    if (!status) {
+        GLint logLength = 0;
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
+        std::string errorLog;
+        errorLog.resize(logLength);
+        if (logLength > 0) {
+            glGetShaderInfoLog(id, logLength, &logLength, errorLog.data());
+        }
+        glDeleteShader(id);
+        const std::string typeName = (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT";
+        const std::string title = "SHADER::" + typeName  + "::COMPILATION_FAILED";
         if (isFatal) {
-            glDeleteShader(id);
-            handleFatalError("Error compiling shader");
+            handleFatalError(title.c_str(), errorLog.c_str());
         } else {
-            glDeleteShader(id);
-            handleWarningError("Error compiling shader");
+            handleWarningError(title.c_str(), errorLog.c_str());
         }
     }
     return id;
 }
 
-GLuint ShaderProgram::createCustomShader(const GLenum type, const char *file) {
-    return createShader(type, file, false);
+GLuint ShaderProgram::createCustomShader(const GLenum type, const char *content) {
+    return createShader(type, content, false);
 }
 
-GLuint ShaderProgram::createDefaultShader(const GLenum type, const char *file) {
-    return createShader(type, file, true);
+GLuint ShaderProgram::createDefaultShader(const GLenum type, const char *content) {
+    return createShader(type, content, true);
 }
