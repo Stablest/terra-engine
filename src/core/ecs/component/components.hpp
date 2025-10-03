@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 
-#include "core/resources/texture.hpp"
-#include "core/shader/shader_program.hpp"
+#include "core/renderer/data/renderer_texture_2d.hpp"
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 
@@ -46,7 +45,7 @@ struct Rect {
 };
 
 struct Sprite {
-    Texture2D *texture = nullptr;
+    RendererTexture2D *texture = nullptr;
     Rect* source = nullptr;
 };
 

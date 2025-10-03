@@ -5,9 +5,6 @@
 #include "core/ecs/component/component_manager.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
-void queueSprites() {
-}
-
 void Engine::startLoop() {
     while (!window_.shouldClose()) {
         glfwPollEvents();
@@ -38,6 +35,8 @@ Engine::Engine(const int width, const int height, const char *title, IGame *game
     game_(game) {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     registerDefaultComponents();
     game_->create();
     startLoop();

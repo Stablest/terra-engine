@@ -18,9 +18,12 @@ add_library(terra_engine
         src/core/ecs/component/component-storage.hpp
         src/core/ecs/entity-manager.cpp
         src/core/ecs/archetypes.hpp
-        src/core/resources/texture.cpp
+        src/core/renderer/data/renderer_texture_2d.cpp
         src/core/renderer/sprite/sprite_render_queue.cpp
         src/core/renderer/sprite/sprite_renderer.cpp
+        src/core/resources/resource_loader.cpp
+        src/core/resources/resource.cpp
+        src/core/resources/resource.hpp
 )
 
 add_dependencies(terra_engine GenerateShaders)
@@ -32,3 +35,4 @@ target_include_directories(terra_engine PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/third-parties/header-only
 )
 target_sources(terra_engine PRIVATE ${GENERATED_DEFAULT_SHADERS_CPP})
+
