@@ -12,8 +12,8 @@ public:
 };
 
 class TextureResource : public Resource {
-    int _width = 0, _height = 0, _channels = 0;
-    std::vector<unsigned char> _buffer;
+    int width_ = 0, height_ = 0, channels_ = 0;
+    std::vector<unsigned char> buffer_;
 
 public:
     TextureResource(int width, int height, int channels, std::string path,
@@ -30,7 +30,7 @@ public:
 };
 
 class ShaderResource : public Resource {
-    std::string _data;
+    std::string data_;
 public:
     explicit ShaderResource(std::string path, std::string data);
 };

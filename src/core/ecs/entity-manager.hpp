@@ -11,9 +11,9 @@ using Entity = std::uint32_t;
 using ComponentSignature = std::bitset<MAX_COMPONENTS>;
 
 class EntityManager {
-    std::queue<Entity> _availableEntities;
-    std::array<ComponentSignature, MAX_ENTITIES> _signatures;
-    std::uint32_t _entityCount = 0;
+    std::queue<Entity> availableEntities_;
+    std::array<ComponentSignature, MAX_ENTITIES> signatures_;
+    std::uint32_t entityCount_ = 0;
 
     EntityManager();
 

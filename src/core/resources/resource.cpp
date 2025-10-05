@@ -7,25 +7,25 @@ const std::string &Resource::getPath() const {
 
 TextureResource::TextureResource(const int width, const int height, const int channels,
                                  std::string path, std::vector<unsigned char> buffer) : Resource(std::move(path)),
-    _width(width), _height(height), _channels(channels), _buffer(std::move(buffer)) {
+    width_(width), height_(height), channels_(channels), buffer_(std::move(buffer)) {
 }
 
 int TextureResource::getWidth() const {
-    return _width;
+    return width_;
 }
 
 int TextureResource::getHeight() const {
-    return _height;
+    return height_;
 }
 
 int TextureResource::getChannels() const {
-    return _channels;
+    return channels_;
 }
 
 const std::vector<unsigned char> & TextureResource::getBuffer() const {
-    return _buffer;
+    return buffer_;
 }
 
 ShaderResource::ShaderResource(std::string path, std::string data)
-    : Resource(std::move(path)), _data(std::move(data)) {
+    : Resource(std::move(path)), data_(std::move(data)) {
 }

@@ -1,8 +1,6 @@
 #pragma once
-
 #include <optional>
 #include <string>
-
 #include "terra_opengl.hpp"
 
 using Shader = unsigned int;

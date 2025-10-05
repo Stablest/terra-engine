@@ -2,7 +2,7 @@
 
 EntityManager::EntityManager() {
     for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
-        _availableEntities.push(entity);
+        availableEntities_.push(entity);
     }
 }
 
@@ -12,36 +12,36 @@ EntityManager &EntityManager::getInstance() {
 }
 
 Entity EntityManager::createEntity() {
-    if (_entityCount >= MAX_ENTITIES) {
+    if (entityCount_ >= MAX_ENTITIES) {
         return 0;
     }
-    const Entity entity = _availableEntities.front();
-    _availableEntities.pop();
-    _entityCount++;
+    const Entity entity = availableEntities_.front();
+    availableEntities_.pop();
+    entityCount_++;
     return entity;
 }
 
 unsigned int EntityManager::destroyEntity(const Entity entity) {
-    _signatures[entity].reset();
-    _availableEntities.push(entity);
-    _entityCount--;
+    signatures_[entity].reset();
+    availableEntities_.push(entity);
+    entityCount_--;
     return entity;
 }
 
 void EntityManager::setSignature(const Entity entity, const ComponentSignature signature) {
-    _signatures[entity] = signature;
+    signatures_[entity] = signature;
 }
 
 ComponentSignature EntityManager::getSignature(const Entity entity) const{
-    return _signatures[entity];
+    return signatures_[entity];
 }
 
 std::vector<Entity> EntityManager::getEntitiesWithSignature(const ComponentSignature &signature) const {
     std::vector<Entity> entities;
-    entities.reserve(_entityCount);
-    for (Entity entity = 0; entity < _entityCount; ++entity) {
-        if (_signatures[entity].none()) continue;
-        if ((_signatures[entity] & signature) == signature) {
+    entities.reserve(entityCount_);
+    for (Entity entity = 0; entity < entityCount_; ++entity) {
+        if (signatures_[entity].none()) continue;
+        if ((signatures_[entity] & signature) == signature) {
             entities.push_back(entity);
         }
     }
