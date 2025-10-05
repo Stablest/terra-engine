@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
 #include <unordered_map>
-
 #include "component-storage.hpp"
 #include "components.hpp"
 
@@ -48,7 +47,6 @@ public:
 
     template<typename T>
     void bindComponent(Entity entity, T component) {
-        // getComponentArray<T>()->add(entity, component);
         const ComponentType typeId = getComponentType<T>();
         std::static_pointer_cast<ComponentStorage<T> >(components_.at(typeId))->add(entity, component);
         auto signature = EntityManager::getInstance().getSignature(entity);

@@ -1,5 +1,4 @@
 #include "resource_loader.hpp"
-
 #include "misc/error/error.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include <fstream>
@@ -10,7 +9,7 @@ bool ImageLoader::canLoad(const std::string &extension) {
     return extension == ".png" || extension == ".jpg" || extension == ".jpeg";
 }
 
-std::unique_ptr<TextureResource> ImageLoader::load(const std::string &filePath) {
+std::shared_ptr<TextureResource> ImageLoader::load(const std::string &filePath) {
     int width, height, channels;
     stbi_set_flip_vertically_on_load(false);
     unsigned char *data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
@@ -22,7 +21,7 @@ std::unique_ptr<TextureResource> ImageLoader::load(const std::string &filePath) 
     const std::vector<unsigned char> buffer (data, data + bufferSize);
     auto resource = TextureResource{width, height, channels, filePath, buffer};
     stbi_image_free(data);
-    return std::make_unique<TextureResource>(resource);
+    return std::make_shared<TextureResource>(resource);
 }
 
 
@@ -30,7 +29,7 @@ bool ShaderLoader::canLoad(const std::string &extension) {
     return extension == ".glsl";
 }
 
-std::unique_ptr<ShaderResource> ShaderLoader::load(const std::string &filePath) {
+std::shared_ptr<ShaderResource> ShaderLoader::load(const std::string &filePath) {
     std::ifstream stream;
     std::string shaderSource;
     stream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -42,6 +41,6 @@ std::unique_ptr<ShaderResource> ShaderLoader::load(const std::string &filePath) 
     } catch (std::ifstream::failure &e) {
         handleWarningError("SHADER_RESOURCE_LOADER::LOADING_DATA_FAILED", e.what());
         return nullptr;
-    };
-    return std::make_unique<ShaderResource>(filePath, std::move(shaderSource));
+    }
+    return std::make_shared<ShaderResource>(filePath, std::move(shaderSource));
 }
