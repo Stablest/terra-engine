@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-
 #include "resource.hpp"
 
 template<typename T>

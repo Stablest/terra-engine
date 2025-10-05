@@ -2,6 +2,8 @@
 
 #include "misc/error/error.hpp"
 #define STB_IMAGE_IMPLEMENTATION
+#include <fstream>
+#include <sstream>
 #include "stb/stb_image.h"
 
 bool ImageLoader::canLoad(const std::string &extension) {
@@ -17,8 +19,7 @@ std::unique_ptr<TextureResource> ImageLoader::load(const std::string &filePath) 
         return nullptr;
     }
     const size_t bufferSize = static_cast<size_t>(width) * height * channels;
-    const std::vector buffer(reinterpret_cast<std::byte *>(data),
-                             reinterpret_cast<std::byte *>(data) + bufferSize);
+    const std::vector<unsigned char> buffer (data, data + bufferSize);
     auto resource = TextureResource{width, height, channels, filePath, buffer};
     stbi_image_free(data);
     return std::make_unique<TextureResource>(resource);
@@ -30,5 +31,17 @@ bool ShaderLoader::canLoad(const std::string &extension) {
 }
 
 std::unique_ptr<ShaderResource> ShaderLoader::load(const std::string &filePath) {
-    return nullptr;
+    std::ifstream stream;
+    std::string shaderSource;
+    stream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    try {
+        stream.open(filePath);
+        std::stringstream buffer;
+        buffer << stream.rdbuf();
+        shaderSource = buffer.str();
+    } catch (std::ifstream::failure &e) {
+        handleWarningError("SHADER_RESOURCE_LOADER::LOADING_DATA_FAILED", e.what());
+        return nullptr;
+    };
+    return std::make_unique<ShaderResource>(filePath, std::move(shaderSource));
 }

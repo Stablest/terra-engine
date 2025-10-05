@@ -1,23 +1,13 @@
 #include "resource.hpp"
-
 #include <filesystem>
 
 const std::string &Resource::getPath() const {
     return path_;
 }
 
-const std::vector<std::byte> &Resource::getBuffer() const {
-    return buffer_;
-}
-
-const unsigned char *Resource::getAsChar() {
-    return reinterpret_cast<unsigned char *>(buffer_.data());
-}
-
 TextureResource::TextureResource(const int width, const int height, const int channels,
-                                 std::string path, std::vector<std::byte> buffer) : Resource(std::move(path),
-        std::move(buffer)),
-    _width(width), _height(height), _channels(channels) {
+                                 std::string path, std::vector<unsigned char> buffer) : Resource(std::move(path)),
+    _width(width), _height(height), _channels(channels), _buffer(std::move(buffer)) {
 }
 
 int TextureResource::getWidth() const {
@@ -32,6 +22,10 @@ int TextureResource::getChannels() const {
     return _channels;
 }
 
-ShaderResource::ShaderResource(std::string path, std::vector<std::byte> _buffer)
-    : Resource(std::move(path), std::move(_buffer)) {
+const std::vector<unsigned char> & TextureResource::getBuffer() const {
+    return _buffer;
+}
+
+ShaderResource::ShaderResource(std::string path, std::string data)
+    : Resource(std::move(path)), _data(std::move(data)) {
 }
