@@ -1,18 +1,17 @@
 #include "sprite_renderer.hpp"
 #include "core/ecs/entity-manager.hpp"
-#include "core/ecs/component/component_manager.hpp"
 #include "core/shader/resources/default_shaders.h"
 #include "glm/gtc/type_ptr.hpp"
 
 static void createQuadVAO(const GLuint quadVAO, const GLuint quadVBO) {
     constexpr float vertices[] = {
         -0.5f, -0.5f, 0.0f, 0.0f, // bottom-left
-         0.5f, -0.5f, 1.0f, 0.0f, // bottom-right
-         0.5f,  0.5f, 1.0f, 1.0f, // top-right
+        0.5f, -0.5f, 1.0f, 0.0f, // bottom-right
+        0.5f, 0.5f, 1.0f, 1.0f, // top-right
 
-         0.5f,  0.5f, 1.0f, 1.0f, // top-right
-        -0.5f,  0.5f, 0.0f, 1.0f, // top-left
-        -0.5f, -0.5f, 0.0f, 0.0f  // bottom-left
+        0.5f, 0.5f, 1.0f, 1.0f, // top-right
+        -0.5f, 0.5f, 0.0f, 1.0f, // top-left
+        -0.5f, -0.5f, 0.0f, 0.0f // bottom-left
     };
     glBindVertexArray(quadVAO);
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
@@ -49,11 +48,11 @@ void SpriteRenderer::render() {
         fallbackShader_.use();
         if (command.texture_ != currentTexture_) {
             currentTexture_ = command.texture_;
-        }
-        if (currentTexture_ != 0) {
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, currentTexture_);
-            fallbackShader_.setInt("texture0", currentTexture_);
+            if (currentTexture_ != 0) {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, currentTexture_);
+                fallbackShader_.setInt("texture0", 0);
+            }
         }
         fallbackShader_.setMatrix4("projection", glm::value_ptr(projection_));
         fallbackShader_.setMatrix4("model", glm::value_ptr(command.model_));
