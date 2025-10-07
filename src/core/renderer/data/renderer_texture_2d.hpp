@@ -15,7 +15,7 @@ public:
 
     explicit RendererTexture2D(const unsigned char *data, GLsizei width, GLsizei height, int channels);
 
-    explicit RendererTexture2D(const std::shared_ptr<TextureResource> &resource);
+    explicit RendererTexture2D(const std::unique_ptr<TextureResource> &resource);
 
     inline void bind() const;
 

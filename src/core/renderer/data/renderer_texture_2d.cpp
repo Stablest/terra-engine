@@ -22,7 +22,7 @@ RendererTexture2D::RendererTexture2D(const unsigned char *data, const GLsizei wi
     this->height_ = height;
 }
 
-RendererTexture2D::RendererTexture2D(const std::shared_ptr<TextureResource> &resource)
+RendererTexture2D::RendererTexture2D(const std::unique_ptr<TextureResource> &resource)
     : RendererTexture2D(resource->getBuffer().data(), resource->getWidth(), resource->getHeight(),
                         resource->getChannels()) {
 }
