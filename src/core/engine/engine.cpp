@@ -3,6 +3,7 @@
 #include "game.hpp"
 #include "terra_opengl.hpp"
 #include "core/ecs/component/component_manager.hpp"
+#include "core/resources/resource_loader.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
 void Engine::startLoop() {
@@ -38,6 +39,7 @@ Engine::Engine(const int width, const int height, const char *title, IGame *game
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     registerDefaultComponents();
+    registerResourceLoaders();
     game_->create();
     startLoop();
 }
@@ -45,4 +47,9 @@ Engine::Engine(const int width, const int height, const char *title, IGame *game
 void Engine::registerDefaultComponents() {
     ComponentManager::getInstance().registerComponent<Transform>();
     ComponentManager::getInstance().registerComponent<Sprite>();
+}
+
+void Engine::registerResourceLoaders() {
+    ResourceManager::getInstance().addLoader(std::make_unique<ImageLoader>());
+    ResourceManager::getInstance().addLoader(std::make_unique<ShaderLoader>());
 }

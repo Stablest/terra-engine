@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include "core/resources/resource.hpp"
 #include "glad/glad.h"
 
@@ -15,7 +14,7 @@ public:
 
     explicit RendererTexture2D(const unsigned char *data, GLsizei width, GLsizei height, int channels);
 
-    explicit RendererTexture2D(const std::unique_ptr<TextureResource> &resource);
+    explicit RendererTexture2D(const TextureResource& resource);
 
     inline void bind() const;
 

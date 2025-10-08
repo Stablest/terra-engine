@@ -9,17 +9,17 @@ bool ImageLoader::canLoad(const std::string &extension) {
     return extension == ".png" || extension == ".jpg" || extension == ".jpeg";
 }
 
-std::unique_ptr<TextureResource> ImageLoader::load(const std::string &filePath) {
+std::unique_ptr<Resource> ImageLoader::load(const std::filesystem::path &filePath) {
     int width, height, channels;
     stbi_set_flip_vertically_on_load(false);
-    unsigned char *data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
+    unsigned char *data = stbi_load(filePath.string().c_str(), &width, &height, &channels, 0);
     if (!data) {
         handleWarningError("TEXTURE_LOADER::LOADING_DATA_FAILED");
         return nullptr;
     }
     const size_t bufferSize = static_cast<size_t>(width) * height * channels;
     const std::vector<unsigned char> buffer (data, data + bufferSize);
-    auto resource = TextureResource{width, height, channels, filePath, buffer};
+    auto resource = TextureResource{width, height, channels, filePath.string(), buffer};
     stbi_image_free(data);
     return std::make_unique<TextureResource>(resource);
 }
@@ -29,7 +29,7 @@ bool ShaderLoader::canLoad(const std::string &extension) {
     return extension == ".glsl";
 }
 
-std::unique_ptr<ShaderResource> ShaderLoader::load(const std::string &filePath) {
+std::unique_ptr<Resource> ShaderLoader::load(const std::filesystem::path &filePath) {
     std::ifstream stream;
     std::string shaderSource;
     stream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -42,5 +42,15 @@ std::unique_ptr<ShaderResource> ShaderLoader::load(const std::string &filePath) 
         handleWarningError("SHADER_RESOURCE_LOADER::LOADING_DATA_FAILED", e.what());
         return nullptr;
     }
-    return std::make_unique<ShaderResource>(filePath, std::move(shaderSource));
+    return std::make_unique<ShaderResource>(filePath.string(), std::move(shaderSource));
+}
+
+
+ResourceManager &ResourceManager::getInstance() {
+    static ResourceManager resourceManager;
+    return resourceManager;
+}
+
+void ResourceManager::addLoader(std::unique_ptr<IResourceLoader> _loader) {
+    loaders_.push_back(std::move(_loader));
 }
