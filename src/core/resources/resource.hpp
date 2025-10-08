@@ -1,14 +1,15 @@
 #pragma once
+#include <filesystem>
 #include <string>
 #include <vector>
 
 class Resource {
-    std::string path_;
+    std::filesystem::path path_;
 public:
-    explicit Resource(std::string path) : path_(std::move(path)) {
+    explicit Resource(std::filesystem::path path) : path_(std::move(path)) {
     }
 
-    [[nodiscard]] const std::string &getPath() const;
+    [[nodiscard]] const std::filesystem::path &getPath() const;
 };
 
 class TextureResource : public Resource {
@@ -16,7 +17,7 @@ class TextureResource : public Resource {
     std::vector<unsigned char> buffer_;
 
 public:
-    TextureResource(int width, int height, int channels, std::string path,
+    TextureResource(int width, int height, int channels, std::filesystem::path path,
                     std::vector<unsigned char> buffer);
 
     [[nodiscard]] int getWidth() const;
@@ -32,5 +33,5 @@ public:
 class ShaderResource : public Resource {
     std::string data_;
 public:
-    explicit ShaderResource(std::string path, std::string data);
+    explicit ShaderResource(std::filesystem::path path, std::string data);
 };
