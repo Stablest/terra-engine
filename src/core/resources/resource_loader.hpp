@@ -32,13 +32,12 @@ public:
 };
 
 class ResourceManager {
-    std::vector<std::unique_ptr<IResourceLoader>> loaders_ = {};
-    std::unordered_map<std::filesystem::path, std::unique_ptr<Resource>> resources_ = {};
+    std::vector<std::unique_ptr<IResourceLoader> > loaders_ = {};
+    std::unordered_map<std::filesystem::path, std::unique_ptr<Resource> > resources_ = {};
 
     ResourceManager() = default;
 
 public:
-
     ResourceManager(const ResourceManager &) = delete;
 
     ResourceManager &operator=(const ResourceManager &) = delete;
@@ -47,14 +46,14 @@ public:
 
     ResourceManager &operator=(ResourceManager &&) = delete;
 
-    static ResourceManager& getInstance();
+    static ResourceManager &getInstance();
 
     void addLoader(std::unique_ptr<IResourceLoader> _loader);
 
     template<ResourceDerived T>
-    T* load(const std::filesystem::path &path) {
+    T *load(const std::filesystem::path &path) {
         const std::string extension = path.extension().string();
-        for (const auto& loader : loaders_) {
+        for (const auto &loader: loaders_) {
             if (loader->canLoad(extension)) {
                 auto resourcePointer = loader->load(path);
                 if (resourcePointer == nullptr) {
@@ -62,12 +61,29 @@ public:
                     return nullptr;
                 }
                 const auto &stored = resources_[path] = std::move(resourcePointer);
-                T* resource = static_cast<T*>(stored.get());
+                T *resource = static_cast<T *>(stored.get());
                 return resource;
             }
         }
         return nullptr;
     }
 
+    template<ResourceDerived T>
+    std::unique_ptr<T> unmanagedLoad(const std::filesystem::path &path) {
+        const std::string extension = path.extension().string();
+        for (const auto &loader: loaders_) {
+            if (loader->canLoad(extension)) {
+                auto resourcePointer = loader->load(path);
+                if (resourcePointer == nullptr) {
+                    handleWarningError("RESOURCE::LOAD_FAILED", path.string().c_str());
+                    return nullptr;
+                }
+                return std::unique_ptr<T>(static_cast<T *>(resourcePointer.release()));
+            }
+        }
+        return nullptr;
+    }
+
     void unload(const std::filesystem::path &path);
+
 };
