@@ -68,4 +68,6 @@ public:
         }
         return nullptr;
     }
+
+    void unload(const std::filesystem::path &path);
 };
