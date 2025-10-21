@@ -28,7 +28,7 @@ public:
     T *load(const std::filesystem::path &path) {
         const std::string extension = path.extension().string();
         if (const auto it = resources_.find(path); it != resources_.end()) {
-            const auto& resource = it->second;
+            const auto &resource = it->second;
             return resource->template cast<T>();
         }
         for (const auto &loader: loaders_) {
@@ -36,7 +36,9 @@ public:
                 auto resourcePointer = loader->load(path);
                 if (resourcePointer == nullptr) {
                     handleWarningError("RESOURCE::LOAD_FAILED", path.string().c_str());
-                    return nullptr;
+                    const auto &fallback = resources_[path] = std::move(loader->getFallback());
+                    T *fallbackResource = fallback->template cast<T>();
+                    return fallbackResource;
                 }
                 const auto &stored = resources_[path] = std::move(resourcePointer);
                 T *resource = stored->template cast<T>();
@@ -54,7 +56,8 @@ public:
                 auto resourcePointer = loader->load(path);
                 if (resourcePointer == nullptr) {
                     handleWarningError("RESOURCE::LOAD_FAILED", path.string().c_str());
-                    return nullptr;
+                    T *fallback = loader->getFallback().release()->template cast<T>();
+                    return std::unique_ptr<T>(fallback);
                 }
                 T *resource = resourcePointer.release()->template cast<T>();
                 return std::unique_ptr<T>(resource);

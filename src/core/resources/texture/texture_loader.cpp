@@ -22,3 +22,16 @@ std::unique_ptr<Resource> ImageLoader::load(const std::filesystem::path &filePat
     stbi_image_free(data);
     return std::make_unique<TextureResource>(resource);
 }
+
+std::unique_ptr<Resource> ImageLoader::getFallback() {
+    constexpr int size = 4;
+    constexpr int channels = 3;
+    std::vector<unsigned char> buffer(size * size * channels);
+    for (int i = 0; i < size * size; i++) {
+        buffer[i * channels + 0] = 255;
+        buffer[i * channels + 1] = 255;
+        buffer[i * channels + 2] = 255;
+    }
+    auto resource = TextureResource{size, size, channels, "fallback/texture", buffer};
+    return std::make_unique<TextureResource>(resource);
+}

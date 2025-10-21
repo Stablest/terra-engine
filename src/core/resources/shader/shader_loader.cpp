@@ -22,3 +22,7 @@ std::unique_ptr<Resource> ShaderLoader::load(const std::filesystem::path &filePa
     }
     return std::make_unique<ShaderResource>(filePath.string(), std::move(shaderSource));
 }
+
+std::unique_ptr<Resource> ShaderLoader::getFallback() {
+    return nullptr;
+}
