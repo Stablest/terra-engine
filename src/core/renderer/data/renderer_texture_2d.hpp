@@ -1,5 +1,5 @@
 #pragma once
-#include "core/resources/resource.hpp"
+#include "core/resources/texture/texture_resource.hpp"
 #include "glad/glad.h"
 
 using TextureID = unsigned int;
@@ -14,7 +14,7 @@ public:
 
     explicit RendererTexture2D(const unsigned char *data, GLsizei width, GLsizei height, int channels);
 
-    explicit RendererTexture2D(const TextureResource& resource);
+    explicit RendererTexture2D(const TextureResource &resource);
 
     inline void bind() const;
 

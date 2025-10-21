@@ -21,16 +21,25 @@ add_library(terra_engine
         src/core/renderer/data/renderer_texture_2d.cpp
         src/core/renderer/sprite/sprite_render_queue.cpp
         src/core/renderer/sprite/sprite_renderer.cpp
-        src/core/resources/resource_loader.cpp
         src/core/resources/resource.cpp
         src/core/resources/resource.hpp
         src/core/object/object.cpp
         src/core/object/object.hpp
         src/core/object/object_type.hpp
+        src/core/resources/texture/texture_loader.cpp
+        src/core/resources/texture/texture_loader.hpp
+        src/core/resources/texture/texture_resource.cpp
+        src/core/resources/texture/texture_resource.hpp
+        src/core/resources/shader/shader_loader.cpp
+        src/core/resources/shader/shader_loader.hpp
+        src/core/resources/shader/shader_resource.cpp
+        src/core/resources/shader/shader_resource.hpp
+        src/core/resources/resource_manager.cpp
+        src/core/resources/resource_manager.hpp
 )
 
 add_dependencies(terra_engine GenerateShaders)
-target_link_libraries(terra_engine PUBLIC terra_opengl)
+target_link_libraries(terra_engine PUBLIC terra_opengl PUBLIC stb_image)
 target_include_directories(terra_engine PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/include
         ${CMAKE_CURRENT_LIST_DIR}/src
@@ -38,4 +47,9 @@ target_include_directories(terra_engine PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/third-parties/header-only
 )
 target_sources(terra_engine PRIVATE ${GENERATED_DEFAULT_SHADERS_CPP})
+
+add_library(stb_image STATIC third-parties/impl/stb_image.cpp)
+target_include_directories(stb_image PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}/third-parties/header-only
+)
 

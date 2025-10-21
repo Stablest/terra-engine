@@ -4,6 +4,9 @@
 #include "terra_opengl.hpp"
 #include "core/ecs/component/component_manager.hpp"
 #include "core/resources/resource_loader.hpp"
+#include "core/resources/resource_manager.hpp"
+#include "core/resources/shader/shader_loader.hpp"
+#include "core/resources/texture/texture_loader.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
 void Engine::startLoop() {
