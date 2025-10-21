@@ -2,8 +2,9 @@
 #include <filesystem>
 #include <string>
 #include <vector>
+#include "core/object/object.hpp"
 
-class Resource {
+class Resource : public Class<Resource, Object> {
     std::filesystem::path path_;
 public:
     explicit Resource(std::filesystem::path path) : path_(std::move(path)) {
@@ -12,7 +13,7 @@ public:
     [[nodiscard]] const std::filesystem::path &getPath() const;
 };
 
-class TextureResource : public Resource {
+class TextureResource final : public Class<TextureResource, Resource> {
     int width_ = 0, height_ = 0, channels_ = 0;
     std::vector<unsigned char> buffer_;
 
@@ -30,7 +31,7 @@ public:
 
 };
 
-class ShaderResource : public Resource {
+class ShaderResource final : public Class<ShaderResource, Resource> {
     std::string data_;
 public:
     explicit ShaderResource(std::filesystem::path path, std::string data);

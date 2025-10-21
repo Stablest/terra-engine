@@ -24,6 +24,9 @@ add_library(terra_engine
         src/core/resources/resource_loader.cpp
         src/core/resources/resource.cpp
         src/core/resources/resource.hpp
+        src/core/object/object.cpp
+        src/core/object/object.hpp
+        src/core/object/object_type.hpp
 )
 
 add_dependencies(terra_engine GenerateShaders)

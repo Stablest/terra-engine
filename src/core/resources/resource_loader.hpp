@@ -61,7 +61,7 @@ public:
                     return nullptr;
                 }
                 const auto &stored = resources_[path] = std::move(resourcePointer);
-                T *resource = static_cast<T *>(stored.get());
+                T *resource = stored->template cast<T>();
                 return resource;
             }
         }
@@ -78,7 +78,8 @@ public:
                     handleWarningError("RESOURCE::LOAD_FAILED", path.string().c_str());
                     return nullptr;
                 }
-                return std::unique_ptr<T>(static_cast<T *>(resourcePointer.release()));
+                T* resource = resourcePointer.release()->template cast<T>();
+                return std::unique_ptr<T>(resource);
             }
         }
         return nullptr;
