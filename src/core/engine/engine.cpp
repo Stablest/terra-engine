@@ -27,9 +27,9 @@ void Engine::queueSprites() {
     for (const Entity entity: renderedEntities) {
         auto &[position, rotation, scale] = ComponentManager::getInstance().getComponent<Transform>(entity);
         auto &sprite = ComponentManager::getInstance().getComponent<Sprite>(entity);
-        auto model = glm::mat4(1.0f);
+        auto model = Matrix4(1.0f);
         model = glm::translate(model, position);
-        model = glm::rotate(model, rotation, glm::vec3(0, 0, 1));
+        model = glm::rotate(model, rotation, Vector3(0, 0, 1));
         model = glm::scale(model, scale * 100.0f);
         renderer_.queueSprite({sprite.texture->getID(), 0, model, 0});
     }

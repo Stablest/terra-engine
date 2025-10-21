@@ -36,6 +36,9 @@ add_library(terra_engine
         src/core/resources/shader/shader_resource.hpp
         src/core/resources/resource_manager.cpp
         src/core/resources/resource_manager.hpp
+        src/core/math/vector2.hpp
+        src/core/math/matrix4.hpp
+        src/core/math/vector3.hpp
 )
 
 add_dependencies(terra_engine GenerateShaders)

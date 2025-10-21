@@ -1,13 +1,12 @@
 #pragma once
 #include <vector>
-
+#include "core/math/matrix4.hpp"
 #include "glad/glad.h"
-#include "glm/ext/matrix_float4x4.hpp"
 
 struct SpriteDrawCommand {
     GLuint texture_ = 0;
     int renderLayer_ = 0;
-    glm::mat4 model_ = glm::mat4(1.0f);
+    Matrix4 model_ = Matrix4(1.0f);
     mutable unsigned int sortKey_ = 0;
 };
 

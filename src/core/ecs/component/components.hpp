@@ -1,9 +1,8 @@
 #pragma once
 #include <string>
-
+#include "core/math/vector2.hpp"
+#include "core/math/vector3.hpp"
 #include "core/renderer/data/renderer_texture_2d.hpp"
-#include "glm/vec2.hpp"
-#include "glm/vec3.hpp"
 
 struct Font;
 
@@ -21,9 +20,9 @@ ComponentType getComponentType() {
 }
 
 struct Transform {
-    glm::vec3 position;
+    Vector3 position;
     float rotation;
-    glm::vec3 scale;
+    Vector3 scale;
 };
 
 // Decouple OpenGL types
@@ -33,15 +32,9 @@ struct Drawable {
     bool isTransparent = false;
 };
 
-// struct Texture {
-//     unsigned int id = 0;
-//     unsigned int channels = 4;
-//     glm::vec2 size = glm::vec2(.0f, .0f);
-// };
-
 struct Rect {
-    glm::vec2 position = {.0f, .0f};
-    glm::vec2 size = { .0f, .0f };
+    Vector2 position = {.0f, .0f};
+    Vector2 size = { .0f, .0f };
 };
 
 struct Sprite {
