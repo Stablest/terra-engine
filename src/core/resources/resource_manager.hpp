@@ -27,6 +27,10 @@ public:
     template<ResourceDerived T>
     T *load(const std::filesystem::path &path) {
         const std::string extension = path.extension().string();
+        if (const auto it = resources_.find(path); it != resources_.end()) {
+            const auto& resource = it->second;
+            return resource->template cast<T>();
+        }
         for (const auto &loader: loaders_) {
             if (loader->canLoad(extension)) {
                 auto resourcePointer = loader->load(path);
