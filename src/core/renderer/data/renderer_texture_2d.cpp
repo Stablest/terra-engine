@@ -1,9 +1,9 @@
 #include "renderer_texture_2d.hpp"
 #include "glad/glad.h"
 
-RendererTexture2D::RendererTexture2D(const unsigned char *data, const GLsizei width, const GLsizei height,
+RendererTexture2D::RendererTexture2D(const unsigned char *data, const Size width, const Size height,
                                      const int channels) {
-    TextureID id;
+    TextureId id;
     glGenTextures(1, &id);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, id);
@@ -31,6 +31,6 @@ void RendererTexture2D::bind() const {
     glBindTexture(GL_TEXTURE_2D, id_);
 }
 
-TextureID RendererTexture2D::getID() const {
+TextureId RendererTexture2D::getID() const {
     return id_;
 }

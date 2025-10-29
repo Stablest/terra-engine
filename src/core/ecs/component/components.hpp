@@ -3,6 +3,7 @@
 #include "core/math/vector2.hpp"
 #include "core/math/vector3.hpp"
 #include "core/renderer/data/renderer_texture_2d.hpp"
+#include "core/shader/shader_program.hpp"
 
 struct Font;
 
@@ -27,7 +28,7 @@ struct Transform {
 
 // Decouple OpenGL types
 struct Drawable {
-    GLuint shaderProgram = 0;
+    ShaderProgramId shaderProgram = 0;
     int renderLayer = 0;
     bool isTransparent = false;
 };

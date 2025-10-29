@@ -2,9 +2,8 @@
 #include <iostream>
 #include "misc/error/error.hpp"
 #include <string>
-#include <vector>
 
-ShaderProgram::ShaderProgram(const GLuint id)
+ShaderProgram::ShaderProgram(const ShaderProgramId id)
     : id_(id) {
 }
 
@@ -20,14 +19,14 @@ void ShaderProgram::setInt(const std::string &name, const int value) const {
     glUniform1i(glGetUniformLocation(id_, name.c_str()), value);
 }
 
-GLuint ShaderProgram::getId() const {
+ShaderProgramId ShaderProgram::getId() const {
     return id_;
 }
 
-std::optional<ShaderProgram> ShaderProgram::createProgram(const unsigned int vertexShader,
-                                                          const unsigned int fragmentShader,
-                                                          const unsigned int geometryShader, const bool isFatal) {
-    const GLuint id = glCreateProgram();
+std::optional<ShaderProgram> ShaderProgram::createProgram(const ShaderId vertexShader,
+                                                          const ShaderId fragmentShader,
+                                                          const ShaderId geometryShader, const bool isFatal) {
+    const ShaderProgramId id = glCreateProgram();
     if (id == 0) {
         if (isFatal) {
             handleFatalError("Couldn't create shader program");
@@ -66,20 +65,20 @@ std::optional<ShaderProgram> ShaderProgram::createProgram(const unsigned int ver
     return ShaderProgram(id);
 }
 
-std::optional<ShaderProgram> ShaderProgram::createCustomProgram(const unsigned int vertexShader,
-                                                                const unsigned int fragmentShader,
-                                                                const unsigned int geometryShader) {
+std::optional<ShaderProgram> ShaderProgram::createCustomProgram(const ShaderId vertexShader,
+                                                                const ShaderId fragmentShader,
+                                                                const ShaderId geometryShader) {
     return createProgram(vertexShader, fragmentShader, geometryShader, false);
 }
 
-ShaderProgram ShaderProgram::createDefaultProgram(const unsigned int vertexShader, const unsigned int fragmentShader,
-                                                  const unsigned int geometryShader) {
+ShaderProgram ShaderProgram::createDefaultProgram(const ShaderId vertexShader, const ShaderId fragmentShader,
+                                                  const ShaderId geometryShader) {
     return createProgram(vertexShader, fragmentShader, geometryShader, true).value();
 }
 
 
-GLuint ShaderProgram::createShader(const GLenum type, const char *content, const bool isFatal) {
-    const GLuint id = glCreateShader(type);
+ShaderId ShaderProgram::compileShader(const GLenum type, const char *content, const bool isFatal) {
+    const ShaderId id = glCreateShader(type);
     glShaderSource(id, 1, &content, nullptr);
     glCompileShader(id);
     GLint status;
@@ -104,10 +103,10 @@ GLuint ShaderProgram::createShader(const GLenum type, const char *content, const
     return id;
 }
 
-GLuint ShaderProgram::createCustomShader(const GLenum type, const char *content) {
-    return createShader(type, content, false);
+ShaderId ShaderProgram::compileCustomShader(const GLenum type, const char *content) {
+    return compileShader(type, content, false);
 }
 
-GLuint ShaderProgram::createDefaultShader(const GLenum type, const char *content) {
-    return createShader(type, content, true);
+ShaderId ShaderProgram::compileDefaultShader(const GLenum type, const char *content) {
+    return compileShader(type, content, true);
 }

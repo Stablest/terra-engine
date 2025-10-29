@@ -3,7 +3,7 @@
 #include "core/shader/resources/default_shaders.h"
 #include "glm/gtc/type_ptr.hpp"
 
-static void createQuadVAO(const GLuint quadVAO, const GLuint quadVBO) {
+static void createQuadVAO(const unsigned int quadVAO, const unsigned int quadVBO) {
     constexpr float vertices[] = {
         -0.5f, -0.5f, 0.0f, 0.0f, // bottom-left
         0.5f, -0.5f, 1.0f, 0.0f, // bottom-right
@@ -24,11 +24,11 @@ static void createQuadVAO(const GLuint quadVAO, const GLuint quadVBO) {
 
 SpriteRenderer::SpriteRenderer() : fallbackShader_(
                                        ShaderProgram::createDefaultProgram(
-                                           ShaderProgram::createDefaultShader(
+                                           ShaderProgram::compileDefaultShader(
                                                GL_VERTEX_SHADER,
                                                default_vertex_shader
                                            ),
-                                           ShaderProgram::createDefaultShader(
+                                           ShaderProgram::compileDefaultShader(
                                                GL_FRAGMENT_SHADER,
                                                default_frag_shader
                                            )

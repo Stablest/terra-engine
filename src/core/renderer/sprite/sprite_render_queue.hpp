@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 #include "core/math/matrix4.hpp"
-#include "glad/glad.h"
+#include "core/renderer/data/renderer_texture_2d.hpp"
 
 struct SpriteDrawCommand {
-    GLuint texture_ = 0;
+    TextureId texture_ = 0;
     int renderLayer_ = 0;
     Matrix4 model_ = Matrix4(1.0f);
     mutable unsigned int sortKey_ = 0;

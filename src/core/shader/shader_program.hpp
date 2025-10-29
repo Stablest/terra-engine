@@ -3,18 +3,20 @@
 #include <string>
 #include "terra_opengl.hpp"
 
-using Shader = unsigned int;
+using ShaderProgramId = unsigned int;
+
+using ShaderId = unsigned int;
 
 class ShaderProgram {
-    GLuint id_;
+    ShaderProgramId id_;
 
-    static std::optional<ShaderProgram> createProgram(GLuint vertexShader, GLuint fragmentShader,
-                                                      GLuint geometryShader = 0, bool isFatal = false);
+    static std::optional<ShaderProgram> createProgram(ShaderId vertexShader, ShaderId fragmentShader,
+                                                      ShaderId geometryShader = 0, bool isFatal = false);
 
-    static GLuint createShader(GLenum type, const char *content, bool isFatal);
+    static ShaderId compileShader(GLenum type, const char *content, bool isFatal);
 
 public:
-    explicit ShaderProgram(GLuint id);
+    explicit ShaderProgram(ShaderProgramId id);
 
     void use() const;
 
@@ -22,14 +24,14 @@ public:
 
     void setInt(const std::string &name, int value) const;
 
-    [[nodiscard]] GLuint getId() const;
+    [[nodiscard]] ShaderProgramId getId() const;
 
-    static std::optional<ShaderProgram> createCustomProgram(GLuint vertexShader, GLuint fragmentShader,
-                                                            GLuint geometryShader = 0);
+    static std::optional<ShaderProgram> createCustomProgram(ShaderId vertexShader, ShaderId fragmentShader,
+                                                            ShaderId geometryShader = 0);
 
-    static ShaderProgram createDefaultProgram(GLuint vertexShader, GLuint fragmentShader, GLuint geometryShader = 0);
+    static ShaderProgram createDefaultProgram(ShaderId vertexShader, ShaderId fragmentShader, ShaderId geometryShader = 0);
 
-    static GLuint createCustomShader(GLenum type, const char *content);
+    static ShaderId compileCustomShader(GLenum type, const char *content);
 
-    static GLuint createDefaultShader(GLenum type, const char *content);
+    static ShaderId compileDefaultShader(GLenum type, const char *content);
 };
