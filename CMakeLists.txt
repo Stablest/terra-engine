@@ -39,6 +39,7 @@ add_library(terra_engine
         src/core/math/vector2.hpp
         src/core/math/matrix4.hpp
         src/core/math/vector3.hpp
+        src/core/math/vector4.hpp
 )
 
 add_dependencies(terra_engine GenerateShaders)
@@ -51,8 +52,7 @@ target_include_directories(terra_engine PUBLIC
 )
 target_sources(terra_engine PRIVATE ${GENERATED_DEFAULT_SHADERS_CPP})
 
-add_library(stb_image STATIC third-parties/impl/stb_image.cpp
-        src/core/math/vector4.hpp)
+add_library(stb_image STATIC third-parties/impl/stb_image.cpp)
 target_include_directories(stb_image PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/third-parties/header-only
 )
