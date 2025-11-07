@@ -58,8 +58,8 @@ void SpriteRenderer::render() {
             command.rect.position.x, command.rect.position.y, command.rect.size.x, command.rect.size.y
         };
         fallbackShader_.setVec("uvRegion", uvRegion);
-        fallbackShader_.setMatrix4("projection", glm::value_ptr(projection_));
-        fallbackShader_.setMatrix4("model", glm::value_ptr(command.model_));
+        fallbackShader_.setMatrix("projection", glm::value_ptr(projection_));
+        fallbackShader_.setMatrix("model", glm::value_ptr(command.model_));
         glBindVertexArray(quadVAO_);
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }

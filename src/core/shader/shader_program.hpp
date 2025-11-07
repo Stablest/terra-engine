@@ -21,7 +21,7 @@ public:
 
     void use() const;
 
-    void setMatrix4(const std::string &name, const float* value) const;
+    void setMatrix(const std::string &name, const float* value) const;
 
     void setVec(const std::string &name, Vector4 vec) const;
 

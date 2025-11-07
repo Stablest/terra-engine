@@ -11,7 +11,7 @@ void ShaderProgram::use() const {
     glUseProgram(id_);
 }
 
-void ShaderProgram::setMatrix4(const std::string &name, const float *value) const {
+void ShaderProgram::setMatrix(const std::string &name, const float *value) const {
     glUniformMatrix4fv(glGetUniformLocation(id_, name.c_str()), 1, GL_FALSE, value);
 }
 
