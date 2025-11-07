@@ -12,6 +12,7 @@ class SpriteRenderer {
     unsigned int quadVAO_ = 0;
     unsigned int quadVBO_ = 0;
     TextureId currentTexture_;
+    Rect currentRect_;
     Matrix4 projection_;
 
 public:

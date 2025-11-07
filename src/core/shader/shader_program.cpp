@@ -15,6 +15,10 @@ void ShaderProgram::setMatrix4(const std::string &name, const float *value) cons
     glUniformMatrix4fv(glGetUniformLocation(id_, name.c_str()), 1, GL_FALSE, value);
 }
 
+void ShaderProgram::setVec(const std::string &name, const Vector4 vec) const {
+    glUniform4f(glGetUniformLocation(id_, name.c_str()), vec.x, vec.y, vec.z, vec.w);
+}
+
 void ShaderProgram::setInt(const std::string &name, const int value) const {
     glUniform1i(glGetUniformLocation(id_, name.c_str()), value);
 }
@@ -93,7 +97,7 @@ ShaderId ShaderProgram::compileShader(const GLenum type, const char *content, co
         }
         glDeleteShader(id);
         const std::string typeName = (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT";
-        const std::string title = "SHADER::" + typeName  + "::COMPILATION_FAILED";
+        const std::string title = "SHADER::" + typeName + "::COMPILATION_FAILED";
         if (isFatal) {
             handleFatalError(title.c_str(), errorLog.c_str());
         } else {

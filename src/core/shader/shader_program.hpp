@@ -2,6 +2,7 @@
 #include <optional>
 #include <string>
 #include "terra_opengl.hpp"
+#include "core/math/vector4.hpp"
 
 using ShaderProgramId = unsigned int;
 
@@ -21,6 +22,8 @@ public:
     void use() const;
 
     void setMatrix4(const std::string &name, const float* value) const;
+
+    void setVec(const std::string &name, Vector4 vec) const;
 
     void setInt(const std::string &name, int value) const;
 

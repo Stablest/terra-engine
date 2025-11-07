@@ -30,11 +30,8 @@ void Engine::queueSprites() {
         auto model = Matrix4(1.0f);
         model = glm::translate(model, position);
         model = glm::rotate(model, rotation, Vector3(0, 0, 1));
-        model = glm::scale(model, Vector3{
-                               static_cast<float>(sprite.texture->getWidth()) * scale.x,
-                               static_cast<float>(sprite.texture->getHeight()) * scale.y, 1
-                           });
-        renderer_.queueSprite({sprite.texture->getID(), 0, model, 0});
+        model = glm::scale(model, Vector3{sprite.rect.size.x * scale.x, sprite.rect.size.y * scale.y, 1});
+        renderer_.queueSprite({sprite.texture->getID(), sprite.rect, 0, model, 0});
     }
 }
 

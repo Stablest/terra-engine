@@ -40,7 +40,7 @@ struct Rect {
 
 struct Sprite {
     RendererTexture2D *texture = nullptr;
-    Rect* source = nullptr;
+    Rect rect;
 };
 
 struct Text {
