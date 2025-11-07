@@ -34,3 +34,12 @@ void RendererTexture2D::bind() const {
 TextureId RendererTexture2D::getID() const {
     return id_;
 }
+
+int RendererTexture2D::getWidth() const {
+    return width_;
+}
+
+int RendererTexture2D::getHeight() const {
+    return height_;
+}
+

@@ -5,13 +5,13 @@
 
 static void createQuadVAO(const unsigned int quadVAO, const unsigned int quadVBO) {
     constexpr float vertices[] = {
-        -0.5f, -0.5f, 0.0f, 0.0f, // bottom-left
-        0.5f, -0.5f, 1.0f, 0.0f, // bottom-right
-        0.5f, 0.5f, 1.0f, 1.0f, // top-right
+        -0.5f, -0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, 1.0f, 1.0f,
 
-        0.5f, 0.5f, 1.0f, 1.0f, // top-right
-        -0.5f, 0.5f, 0.0f, 1.0f, // top-left
-        -0.5f, -0.5f, 0.0f, 0.0f // bottom-left
+        0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.0f, 0.0f
     };
     glBindVertexArray(quadVAO);
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);

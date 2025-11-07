@@ -1,6 +1,5 @@
 #pragma once
 #include "core/resources/texture/texture_resource.hpp"
-#include "glad/glad.h"
 
 using TextureId = unsigned int;
 
@@ -8,7 +7,7 @@ using Size = int;
 
 class RendererTexture2D {
     TextureId id_ = 0;
-    unsigned int width_ = 0, height_ = 0;
+    int width_ = 0, height_ = 0;
 
 public:
     unsigned int wrapS_ = 0, wrapT_ = 0;
@@ -21,4 +20,8 @@ public:
     inline void bind() const;
 
     [[nodiscard]] TextureId getID() const;
+
+    [[nodiscard]] int getWidth() const;
+
+    [[nodiscard]] int getHeight() const;
 };
