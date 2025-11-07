@@ -52,8 +52,8 @@ target_include_directories(terra_engine PUBLIC
 )
 target_sources(terra_engine PRIVATE ${GENERATED_DEFAULT_SHADERS_CPP})
 
-add_library(stb_image STATIC third-parties/impl/stb_image.cpp)
+add_library(stb_image STATIC src/misc/stb_image.cpp)
 target_include_directories(stb_image PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/third-parties/header-only
+        ${CMAKE_CURRENT_LIST_DIR}/third-parties
 )
 
