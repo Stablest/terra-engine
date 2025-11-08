@@ -5,18 +5,30 @@
 class IGame;
 
 class Engine {
-    Window window_;
-    Renderer renderer_;
+    Window* window_;
+    Renderer* renderer_;
     IGame *game_;
 
-    void startLoop();
+    void startLoop() const;
 
-    void queueSprites();
+    void queueSprites() const;
+
+    Engine() = default;
 
 public:
-    Engine(int width, int height, const char *title, IGame *game);
+    Engine(const Engine &) = delete;
+
+    Engine &operator=(const Engine &) = delete;
+
+    Engine(Engine &&) = delete;
+
+    Engine &operator=(Engine &&) = delete;
+
+    void init(int width, int height, std::string&& title, IGame* game);
 
     static void registerDefaultComponents();
 
     static void registerResourceLoaders();
+
+    static Engine& getInstance();
 };

@@ -9,17 +9,17 @@
 #include "core/resources/texture/texture_loader.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
-void Engine::startLoop() {
-    while (!window_.shouldClose()) {
+void Engine::startLoop() const {
+    while (!window_->shouldClose()) {
         glfwPollEvents();
         game_->update();
         queueSprites();
-        renderer_.render();
-        window_.swapBuffers();
+        renderer_->render();
+        window_->swapBuffers();
     }
 }
 
-void Engine::queueSprites() {
+void Engine::queueSprites() const {
     ComponentSignature spriteSignature;
     spriteSignature.set(getComponentType<Transform>());
     spriteSignature.set(getComponentType<Sprite>());
@@ -31,12 +31,14 @@ void Engine::queueSprites() {
         model = glm::translate(model, position);
         model = glm::rotate(model, rotation, Vector3(0, 0, 1));
         model = glm::scale(model, Vector3{sprite.rect.size.x * scale.x, sprite.rect.size.y * scale.y, 1});
-        renderer_.queueSprite({sprite.texture->getID(), sprite.rect, 0, model, 0});
+        renderer_->queueSprite({sprite.texture->getID(), sprite.rect, 0, model, 0});
     }
 }
 
-Engine::Engine(const int width, const int height, const char *title, IGame *game) : window_(width, height, title),
-    game_(game) {
+void Engine::init(const int width, const int height, std::string &&title, IGame *game) {
+    window_ = new Window(width, height, title.c_str());
+    renderer_ = new Renderer();
+    game_ = game;
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
     glEnable(GL_BLEND);
@@ -55,4 +57,9 @@ void Engine::registerDefaultComponents() {
 void Engine::registerResourceLoaders() {
     ResourceManager::getInstance().addLoader(std::make_unique<ImageLoader>());
     ResourceManager::getInstance().addLoader(std::make_unique<ShaderLoader>());
+}
+
+Engine &Engine::getInstance() {
+    static Engine engine;
+    return engine;
 }
