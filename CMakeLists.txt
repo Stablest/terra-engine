@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Subdirectories
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/drivers/opengl)
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/src/core/shader/resources)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/src/core/renderer/sprite/shaders)
 
 add_library(terra_engine
         src/core/engine/engine.cpp

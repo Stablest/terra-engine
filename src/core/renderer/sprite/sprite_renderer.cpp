@@ -1,6 +1,6 @@
 #include "sprite_renderer.hpp"
 #include "core/ecs/entity-manager.hpp"
-#include "core/shader/resources/default_shaders.h"
+#include "shaders/sprite_shaders.h"
 #include "glm/gtc/type_ptr.hpp"
 
 static void createQuadVAO(const unsigned int quadVAO, const unsigned int quadVBO) {
@@ -26,11 +26,11 @@ SpriteRenderer::SpriteRenderer() : fallbackShader_(
                                        ShaderProgram::createDefaultProgram(
                                            ShaderProgram::compileDefaultShader(
                                                GL_VERTEX_SHADER,
-                                               default_vertex_shader
+                                               sprite_vertex_shader
                                            ),
                                            ShaderProgram::compileDefaultShader(
                                                GL_FRAGMENT_SHADER,
-                                               default_frag_shader
+                                               sprite_fragment_shader
                                            )
                                            , 0)),
                                    currentTexture_(0),
