@@ -2,7 +2,7 @@
 #include <string_view>
 
 template<typename T>
-constexpr std::string_view type_name() {
+constexpr std::string_view getTypeName() {
 #if defined(__clang__)
     constexpr std::string_view prefix = "std::string_view type_name() [T = ";
     constexpr std::string_view function = __PRETTY_FUNCTION__;
@@ -35,19 +35,19 @@ public:
     using Base::Base;
 
     static constexpr std::string_view getClassStatic() {
-        return type_name<Derived>();
+        return getTypeName<Derived>();
     }
 
     [[nodiscard]] std::string_view getClass() const override {
-        return type_name<Derived>();
+        return getTypeName<Derived>();
     }
 
     [[nodiscard]] bool isClass(std::string_view name) const override {
-        return name == type_name<Derived>() || Base::isClass(name);
+        return name == getTypeName<Derived>() || Base::isClass(name);
     }
 
     template<typename T>
     [[nodiscard]] bool isClass() const {
-        return type_name<T>() == getClass() || Base::template isClass<T>();
+        return getTypeName<T>() == getClass() || Base::template isClass<T>();
     }
 };

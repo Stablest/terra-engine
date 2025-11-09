@@ -16,7 +16,7 @@ public:
 
     template<typename T>
     static bool isClass() {
-        return type_name<T>() == "Object";
+        return getTypeName<T>() == "Object";
     }
 
     template<typename T>
