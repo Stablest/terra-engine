@@ -1,5 +1,5 @@
 #pragma once
-#include "core/object/object_type.hpp"
+#include "core/object/class.hpp"
 #include "core/resources/resource.hpp"
 
 class ShaderResource final : public Class<ShaderResource, Resource> {

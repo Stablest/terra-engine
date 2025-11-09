@@ -25,7 +25,7 @@ add_library(terra_engine
         src/core/resources/resource.hpp
         src/core/object/object.cpp
         src/core/object/object.hpp
-        src/core/object/object_type.hpp
+        src/core/object/class.hpp
         src/core/resources/texture/texture_loader.cpp
         src/core/resources/texture/texture_loader.hpp
         src/core/resources/texture/texture_resource.cpp
