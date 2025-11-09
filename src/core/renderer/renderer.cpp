@@ -1,6 +1,5 @@
 #include "renderer.hpp"
 
-
 void Renderer::render() {
     spriteRenderer_.render();
 }

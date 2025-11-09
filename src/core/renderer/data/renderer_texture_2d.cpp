@@ -1,5 +1,5 @@
 #include "renderer_texture_2d.hpp"
-#include "glad/glad.h"
+#include "terra_opengl.hpp"
 
 RendererTexture2D::RendererTexture2D(const unsigned char *data, const Size width, const Size height,
                                      const int channels) {

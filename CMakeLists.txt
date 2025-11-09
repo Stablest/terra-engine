@@ -40,6 +40,11 @@ add_library(terra_engine
         src/core/math/matrix4.hpp
         src/core/math/vector3.hpp
         src/core/math/vector4.hpp
+        src/core/input/input.cpp
+        src/core/input/input.hpp
+        src/core/input/input_action.cpp
+        src/core/input/input_action.hpp
+        src/core/window/key.hpp
 )
 
 add_dependencies(terra_engine GenerateShaders)

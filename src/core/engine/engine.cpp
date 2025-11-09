@@ -3,15 +3,19 @@
 #include "game.hpp"
 #include "terra_opengl.hpp"
 #include "core/ecs/component/component_manager.hpp"
+#include "core/input/input.hpp"
+#include "core/renderer/renderer.hpp"
 #include "core/resources/resource_loader.hpp"
 #include "core/resources/resource_manager.hpp"
 #include "core/resources/shader/shader_loader.hpp"
 #include "core/resources/texture/texture_loader.hpp"
+#include "core/window/window.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
 void Engine::startLoop() const {
     while (!window_->shouldClose()) {
-        glfwPollEvents();
+        input_->resetState();
+        window_->pollEvents();
         game_->update();
         queueSprites();
         renderer_->render();
@@ -38,6 +42,7 @@ void Engine::queueSprites() const {
 void Engine::init(const int width, const int height, std::string &&title, IGame *game) {
     window_ = new Window(width, height, title.c_str());
     renderer_ = new Renderer();
+    input_ = new Input(*window_);
     game_ = game;
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
@@ -47,6 +52,10 @@ void Engine::init(const int width, const int height, std::string &&title, IGame 
     registerResourceLoaders();
     game_->create();
     startLoop();
+}
+
+Input *Engine::getInput() const {
+    return input_;
 }
 
 void Engine::registerDefaultComponents() {

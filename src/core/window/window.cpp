@@ -3,7 +3,6 @@
 #include <iostream>
 #include <ostream>
 #include <string>
-#include "terra_opengl.hpp"
 #include "misc/error/error.hpp"
 
 static void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
@@ -15,16 +14,24 @@ Window::Window(const int width, const int height, const char *title) : width_(wi
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    GLFWwindow *window = glfwCreateWindow(width, height, name_.c_str(), nullptr, nullptr);
-    if (!window) {
+    GLFWwindow *glfwWindow = glfwCreateWindow(width, height, name_.c_str(), nullptr, nullptr);
+    if (!glfwWindow) {
         handleFatalError("Failed to create application window");
     }
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(glfwWindow);
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
         handleFatalError("Failed to initialize GLAD");
     }
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    handle_ = window;
+    glfwSetFramebufferSizeCallback(glfwWindow, framebuffer_size_callback);
+    handle_ = glfwWindow;
+    glfwSetWindowUserPointer(handle_, this);
+    glfwSetKeyCallback(
+        handle_, [](GLFWwindow *window, const int key, const int scanCode, const int action, const int mods) {
+            const auto *currentWindow = static_cast<Window *>(glfwGetWindowUserPointer(window));
+            const Key engineKey = translateKeyToEngineKey(key);
+            const KeyState engineState = translateStateToEngineState(action);
+            currentWindow->onKeyHandled(engineKey, engineState, mods);
+        });
     glViewport(0, 0, width, height);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 }
@@ -35,6 +42,25 @@ Window::~Window() {
         handle_ = nullptr;
     }
     glfwTerminate();
+}
+
+constexpr Key Window::translateKeyToEngineKey(const int key) {
+    if (key < 0 || key > GLFW_KEY_LAST) {
+        return Key::NONE;
+    }
+    return KEY_TABLE[key];
+}
+
+constexpr KeyState Window::translateStateToEngineState(const int state) {
+    if (state > 3 || state < 0) {
+        return KeyState::NONE;
+    }
+    constexpr std::array<KeyState, 3> states{
+        KeyState::RELEASED,
+        KeyState::PRESSED,
+        KeyState::REPEATED,
+    };
+    return states[state];
 }
 
 std::string Window::getName() {
@@ -51,6 +77,24 @@ int Window::getHeight() const {
 
 bool Window::shouldClose() const {
     return glfwWindowShouldClose(handle_);
+}
+
+void Window::setKeyCallback(std::function<void(Key, KeyState, int)> &&callback) {
+    onKeyHandled = callback;
+}
+
+// TODO # Fix Key input
+KeyState Window::getKeyState(const Key key) const {
+    switch (glfwGetKey(handle_, static_cast<int>(key))) {
+        case GLFW_PRESS: return KeyState::PRESSED;
+        case GLFW_RELEASE: return KeyState::RELEASED;
+        case GLFW_REPEAT: return KeyState::REPEATED;
+        default: return KeyState::NONE;
+    }
+}
+
+void Window::pollEvents() const {
+    glfwPollEvents();
 }
 
 void Window::swapBuffers() const {

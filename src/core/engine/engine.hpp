@@ -1,12 +1,15 @@
 #pragma once
-#include "core/renderer/renderer.hpp"
-#include "core/window/window.hpp"
+#include <string>
 
+class Renderer;
+class Window;
+class Input;
 class IGame;
 
 class Engine {
     Window* window_;
     Renderer* renderer_;
+    Input* input_;
     IGame *game_;
 
     void startLoop() const;
@@ -25,6 +28,8 @@ public:
     Engine &operator=(Engine &&) = delete;
 
     void init(int width, int height, std::string&& title, IGame* game);
+
+    [[nodiscard]] Input *getInput() const;
 
     static void registerDefaultComponents();
 
