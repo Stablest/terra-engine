@@ -20,7 +20,7 @@ public:
     }
 
     template<typename T>
-    T *cast() {
+    [[nodiscard]] T *cast() const {
         if (isClass(T::getClassStatic())) {
             return static_cast<T *>(this);
         }
@@ -28,9 +28,9 @@ public:
     }
 
     template<typename T>
-    T *cast() const {
+    [[nodiscard]] const T *cast() const {
         if (isClass(T::getClassStatic())) {
-            return static_cast<T *>(this);
+            return static_cast<const T *>(this);
         }
         return nullptr;
     }
