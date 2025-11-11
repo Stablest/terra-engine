@@ -10,8 +10,7 @@ class RendererTexture2D {
     int width_ = 0, height_ = 0;
 
 public:
-    unsigned int wrapS_ = 0, wrapT_ = 0;
-    unsigned int filterMin_ = 0, filterMax_ = 0;
+    RendererTexture2D() = default;
 
     explicit RendererTexture2D(const unsigned char *data, Size width, Size height, int channels);
 
@@ -19,7 +18,7 @@ public:
 
     inline void bind() const;
 
-    [[nodiscard]] TextureId getID() const;
+    [[nodiscard]] TextureId getId() const;
 
     [[nodiscard]] int getWidth() const;
 

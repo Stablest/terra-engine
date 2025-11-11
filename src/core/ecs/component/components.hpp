@@ -39,7 +39,7 @@ struct Rect {
 };
 
 struct Sprite {
-    RendererTexture2D *texture = nullptr;
+    RendererTexture2D texture;
     Rect rect;
 };
 

@@ -31,7 +31,7 @@ void RendererTexture2D::bind() const {
     glBindTexture(GL_TEXTURE_2D, id_);
 }
 
-TextureId RendererTexture2D::getID() const {
+TextureId RendererTexture2D::getId() const {
     return id_;
 }
 

@@ -35,7 +35,7 @@ void Engine::queueSprites() const {
         model = glm::translate(model, position);
         model = glm::rotate(model, rotation, Vector3(0, 0, 1));
         model = glm::scale(model, Vector3{sprite.rect.size.x * scale.x, sprite.rect.size.y * scale.y, 1});
-        renderer_->queueSprite({sprite.texture->getID(), sprite.rect, 0, model, 0});
+        renderer_->queueSprite({sprite.texture.getId(), sprite.rect, 0, model, 0});
     }
 }
 
