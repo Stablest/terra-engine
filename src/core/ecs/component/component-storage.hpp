@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../entity-manager.hpp"
-#include "misc/dense_array/packed_array.hpp"
+#include "misc/dense_array/dense_array.hpp"
 
 class IComponentStorage {
     public:

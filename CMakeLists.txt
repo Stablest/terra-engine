@@ -45,7 +45,7 @@ add_library(terra_engine
         src/core/input/input_action.cpp
         src/core/input/input_action.hpp
         src/core/window/key.hpp
-        src/misc/dense_array/packed_array.hpp
+        src/misc/dense_array/dense_array.hpp
 )
 
 add_dependencies(terra_engine GenerateShaders)
