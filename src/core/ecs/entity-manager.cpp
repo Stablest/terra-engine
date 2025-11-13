@@ -1,4 +1,5 @@
 #include "entity-manager.hpp"
+#include "component/component_manager.hpp"
 
 EntityManager::EntityManager() {
     for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
@@ -13,7 +14,7 @@ EntityManager &EntityManager::getInstance() {
 
 Entity EntityManager::createEntity() {
     if (entityCount_ >= MAX_ENTITIES) {
-        return 0;
+        return -1;
     }
     const Entity entity = availableEntities_.front();
     availableEntities_.pop();
@@ -39,7 +40,7 @@ ComponentSignature EntityManager::getSignature(const Entity entity) const{
 std::vector<Entity> EntityManager::getEntitiesWithSignature(const ComponentSignature &signature) const {
     std::vector<Entity> entities;
     entities.reserve(entityCount_);
-    for (Entity entity = 0; entity < entityCount_; ++entity) {
+    for (Entity entity = 0; entity < entityCount_; entity++) {
         if (signatures_[entity].none()) continue;
         if ((signatures_[entity] & signature) == signature) {
             entities.push_back(entity);
