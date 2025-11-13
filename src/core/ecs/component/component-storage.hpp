@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../entity-manager.hpp"
-#include "misc/packed_array/packed_array.hpp"
+#include "misc/dense_array/packed_array.hpp"
 
 class IComponentStorage {
     public:
@@ -11,8 +11,8 @@ class IComponentStorage {
 
 template <typename T>
 class ComponentStorage final : public IComponentStorage {
-    PackedArray<T> components_;
-    PackedArray<Entity> entities_;
+    DenseArray<T> components_;
+    DenseArray<Entity> entities_;
     std::vector<int> sparse_;
 
     public:

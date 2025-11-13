@@ -2,7 +2,7 @@
 #include <vector>
 
 template <typename T>
-class PackedArray {
+class DenseArray {
     std::vector<T> dense_;
 
 public:
