@@ -18,7 +18,7 @@ class ComponentStorage final : public IComponentStorage {
     public:
 
     [[nodiscard]] bool contains(const Entity entity) const {
-        if (entity > sparse_.size()) {
+        if (entity >= sparse_.size()) {
             return false;
         }
         return sparse_[entity] >= 0;
